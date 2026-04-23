@@ -15,8 +15,8 @@ S3 (input video) → AWS Glue Python Shell Job → S3 (JPG frames)
 ## Quick Start (AWS CloudShell)
 
 ```bash
-git clone https://github.com/<your-username>/awsglue-demo.git
-cd awsglue-demo
+git clone https://github.com/labsji/aws-glue-demo.git
+cd aws-glue-demo
 chmod +x setup.sh
 ./setup.sh
 ```
