@@ -42,7 +42,7 @@ LAB_POLICY=$(cat <<EOF
     {
       "Sid":"S3BucketOps",
       "Effect":"Allow",
-      "Action":["s3:CreateBucket","s3:DeleteBucket","s3:ListBucket","s3:GetBucketLocation","s3:GetBucketVersioning","s3:GetBucketAcl","s3:GetBucketPolicy","s3:PutBucketPolicy","s3:GetEncryptionConfiguration"],
+      "Action":["s3:*"],
       "Resource":"arn:aws:s3:::glue-video-*"
     },
     {
