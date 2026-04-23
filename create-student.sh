@@ -3,10 +3,10 @@ set -e
 
 STUDENT_USER="${1:-student007}"
 STUDENT_PASS="${2:-Student@GlueLab2026!}"
-REGION="ap-south-1"
+REGION="${AWS_REGION:-ap-south-2}"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 ROLE_NAME="StudentLearner"
-POLICY_NAME="StudentGlueLabPolicy"
+POLICY_NAME="StudentGlueLabPolicy-${REGION}"
 
 echo "=== Creating Student Account ==="
 echo "User:    $STUDENT_USER"
@@ -149,7 +149,7 @@ echo ""
 echo "Console URL: https://${ACCOUNT_ID}.signin.aws.amazon.com/console"
 echo "Username:    $STUDENT_USER"
 echo "Password:    $STUDENT_PASS  (must change on first login)"
-echo "Region:      $REGION (Mumbai)"
+echo "Region:      $REGION"
 echo ""
 echo "Student can open CloudShell and run:"
 echo "  git clone https://github.com/labsji/aws-glue-demo.git"
