@@ -53,6 +53,16 @@ aws glue start-job-run --job-name video-frame-extractor \
   --arguments '{"--INPUT_KEY":"videos/my-video.mp4"}' --region ap-south-1
 ```
 
+## Hands-On Tutorial
+
+See **[TUTORIAL.md](TUTORIAL.md)** for the full 3-lab training:
+
+| Lab | Description | Glue Job |
+|-----|-------------|----------|
+| Lab 1 | Video → Frames (extract) | `video-frame-extractor` |
+| Lab 2 | Feature extraction & annotation (detect balls) | `video-frame-annotator` |
+| Lab 3 | Annotated frames → Video (stitch) | `video-frame-stitcher` |
+
 ## Cleanup
 
 ```bash
@@ -64,9 +74,12 @@ chmod +x cleanup.sh
 
 | File | Description |
 |------|-------------|
-| `setup.sh` | One-click setup: creates buckets, IAM role, uploads deps, creates Glue job |
+| `setup.sh` | One-click setup: creates buckets, IAM role, uploads deps, creates Glue jobs |
 | `cleanup.sh` | Tears down all created AWS resources |
-| `extract_frames.py` | Glue job script — extracts video frames using OpenCV |
+| `extract_frames.py` | Lab 1 — extracts video frames using OpenCV |
+| `annotate_frames.py` | Lab 2 — detects balls and draws bounding boxes |
+| `stitch_video.py` | Lab 3 — stitches annotated frames back into video |
+| `TUTORIAL.md` | Step-by-step hands-on tutorial |
 | `sample-video/sample.mp4` | Default test video |
 | `sample-video/soccer.mp4` | Soccer clip — ball detection |
 | `sample-video/tennis.mp4` | Tennis clip — ball detection |
