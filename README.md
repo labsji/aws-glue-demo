@@ -67,4 +67,10 @@ chmod +x cleanup.sh
 | `setup.sh` | One-click setup: creates buckets, IAM role, uploads deps, creates Glue job |
 | `cleanup.sh` | Tears down all created AWS resources |
 | `extract_frames.py` | Glue job script — extracts video frames using OpenCV |
-| `sample-video/sample.mp4` | Sample test video |
+| `sample-video/sample.mp4` | Default test video |
+| `sample-video/soccer.mp4` | Soccer clip — ball detection |
+| `sample-video/tennis.mp4` | Tennis clip — ball detection |
+| `sample-video/basketball.mp4` | Basketball clip — ball detection |
+| `sample-video/cricket.mp4` | Cricket clip — ball detection |
+
+All sample sports videos are sourced from [Mixkit](https://mixkit.co) and [Pexels](https://pexels.com) (free license).
