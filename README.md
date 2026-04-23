@@ -37,7 +37,7 @@ AWS_REGION=us-east-1 ./setup.sh
 ./run.sh status             # Check job status
 ```
 
-Available videos: `sample`, `soccer`, `tennis`, `basketball`, `cricket`
+Available videos: `sample`, `batminton`, `cloud`, `dna`, `flyover`, `tunneltraffic`
 
 ## Hands-On Tutorial
 
@@ -68,9 +68,8 @@ chmod +x cleanup.sh
 | `stitch_video.py` | Lab 3 — stitches annotated frames back into video |
 | `TUTORIAL.md` | Step-by-step hands-on tutorial |
 | `sample-video/sample.mp4` | Default test video |
-| `sample-video/soccer.mp4` | Soccer clip — ball detection |
-| `sample-video/tennis.mp4` | Tennis clip — ball detection |
-| `sample-video/basketball.mp4` | Basketball clip — ball detection |
-| `sample-video/cricket.mp4` | Cricket clip — ball detection |
-
-All sample sports videos are sourced from [Mixkit](https://mixkit.co) and [Pexels](https://pexels.com) (free license).
+| `sample-video/batminton.mp4` | Badminton clip — shuttle detection |
+| `sample-video/cloud.mp4` | Cloud footage |
+| `sample-video/dna.mp4` | DNA animation |
+| `sample-video/flyover.mp4` | Aerial flyover |
+| `sample-video/tunneltraffic.mp4` | Tunnel traffic footage |

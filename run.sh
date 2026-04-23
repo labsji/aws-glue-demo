@@ -23,7 +23,7 @@ usage() {
   echo "  ./run.sh all tennis"
   echo "  ./run.sh status"
   echo ""
-  echo "Available videos: sample, soccer, tennis, basketball, cricket"
+  echo "Available videos: sample, batminton, cloud, dna, flyover, tunneltraffic"
   exit 1
 }
 
