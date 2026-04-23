@@ -61,9 +61,11 @@ aws s3 cp extract_frames.py "s3://${INPUT_BUCKET}/scripts/extract_frames.py" --r
 aws s3 cp annotate_frames.py "s3://${INPUT_BUCKET}/scripts/annotate_frames.py" --region "$REGION" --quiet
 aws s3 cp stitch_video.py "s3://${INPUT_BUCKET}/scripts/stitch_video.py" --region "$REGION" --quiet
 
-# Upload sample video
-echo "Uploading sample video..."
-aws s3 cp sample-video/sample.mp4 "s3://${INPUT_BUCKET}/videos/sample.mp4" --region "$REGION" --quiet
+# Upload sample videos
+echo "Uploading sample videos..."
+for VIDEO in sample-video/*.mp4; do
+  aws s3 cp "$VIDEO" "s3://${INPUT_BUCKET}/videos/$(basename $VIDEO)" --region "$REGION" --quiet
+done
 
 # Wait for IAM propagation
 echo "Waiting 10s for IAM role propagation..."
