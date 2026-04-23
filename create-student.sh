@@ -40,28 +40,54 @@ LAB_POLICY=$(cat <<EOF
   "Version":"2012-10-17",
   "Statement":[
     {
-      "Sid":"S3BucketManagement",
+      "Sid":"S3BucketOps",
       "Effect":"Allow",
-      "Action":["s3:CreateBucket","s3:DeleteBucket","s3:PutBucketPolicy","s3:GetBucketLocation","s3:ListBucket"],
+      "Action":["s3:CreateBucket","s3:DeleteBucket","s3:ListBucket","s3:GetBucketLocation","s3:GetBucketVersioning","s3:GetBucketAcl","s3:GetBucketPolicy","s3:PutBucketPolicy","s3:GetEncryptionConfiguration"],
       "Resource":"arn:aws:s3:::glue-video-*"
     },
     {
-      "Sid":"S3ObjectAccess",
+      "Sid":"S3ObjectOps",
       "Effect":"Allow",
-      "Action":["s3:GetObject","s3:PutObject","s3:DeleteObject"],
+      "Action":["s3:GetObject","s3:PutObject","s3:DeleteObject","s3:GetObjectVersion"],
       "Resource":"arn:aws:s3:::glue-video-*/*"
     },
     {
-      "Sid":"S3ListAll",
+      "Sid":"S3ListBuckets",
       "Effect":"Allow",
-      "Action":"s3:ListAllMyBuckets",
+      "Action":["s3:ListAllMyBuckets","s3:GetBucketLocation"],
       "Resource":"*"
     },
     {
-      "Sid":"GlueJobManagement",
+      "Sid":"GlueJobWrite",
       "Effect":"Allow",
-      "Action":["glue:CreateJob","glue:DeleteJob","glue:GetJob","glue:GetJobs","glue:GetJobRun","glue:GetJobRuns","glue:StartJobRun","glue:BatchStopJobRun","glue:UpdateJob"],
+      "Action":["glue:CreateJob","glue:DeleteJob","glue:UpdateJob","glue:StartJobRun","glue:BatchStopJobRun"],
       "Resource":"arn:aws:glue:${REGION}:${ACCOUNT_ID}:job/video-frame-*"
+    },
+    {
+      "Sid":"GlueReadOnly",
+      "Effect":"Allow",
+      "Action":["glue:Get*","glue:List*","glue:BatchGet*","glue:SearchTables"],
+      "Resource":"*",
+      "Condition":{"StringEquals":{"aws:RequestedRegion":"${REGION}"}}
+    },
+    {
+      "Sid":"CloudWatchMetrics",
+      "Effect":"Allow",
+      "Action":["cloudwatch:GetMetricData","cloudwatch:GetMetricStatistics","cloudwatch:ListMetrics"],
+      "Resource":"*",
+      "Condition":{"StringEquals":{"aws:RequestedRegion":"${REGION}"}}
+    },
+    {
+      "Sid":"CloudWatchLogs",
+      "Effect":"Allow",
+      "Action":["logs:GetLogEvents","logs:DescribeLogStreams","logs:DescribeLogGroups","logs:FilterLogEvents"],
+      "Resource":"arn:aws:logs:${REGION}:${ACCOUNT_ID}:*"
+    },
+    {
+      "Sid":"IAMRoleOps",
+      "Effect":"Allow",
+      "Action":["iam:CreateRole","iam:DeleteRole","iam:GetRole","iam:PutRolePolicy","iam:DeleteRolePolicy","iam:GetRolePolicy"],
+      "Resource":"arn:aws:iam::${ACCOUNT_ID}:role/GlueVideoFrameExtractorRole"
     },
     {
       "Sid":"IAMPassRole",
@@ -71,25 +97,13 @@ LAB_POLICY=$(cat <<EOF
       "Condition":{"StringEquals":{"iam:PassedToService":"glue.amazonaws.com"}}
     },
     {
-      "Sid":"IAMRoleManagement",
-      "Effect":"Allow",
-      "Action":["iam:CreateRole","iam:DeleteRole","iam:PutRolePolicy","iam:DeleteRolePolicy","iam:GetRole","iam:GetRolePolicy"],
-      "Resource":"arn:aws:iam::${ACCOUNT_ID}:role/GlueVideoFrameExtractorRole"
-    },
-    {
-      "Sid":"CloudWatchLogs",
-      "Effect":"Allow",
-      "Action":["logs:GetLogEvents","logs:DescribeLogStreams","logs:DescribeLogGroups"],
-      "Resource":"arn:aws:logs:${REGION}:${ACCOUNT_ID}:*"
-    },
-    {
-      "Sid":"CloudShellAccess",
+      "Sid":"CloudShell",
       "Effect":"Allow",
       "Action":"cloudshell:*",
       "Resource":"*"
     },
     {
-      "Sid":"STSGetIdentity",
+      "Sid":"STS",
       "Effect":"Allow",
       "Action":"sts:GetCallerIdentity",
       "Resource":"*"
@@ -97,7 +111,7 @@ LAB_POLICY=$(cat <<EOF
     {
       "Sid":"DenyOtherRegions",
       "Effect":"Deny",
-      "Action":["s3:CreateBucket","glue:*"],
+      "Action":["glue:CreateJob","glue:UpdateJob","glue:StartJobRun","s3:CreateBucket"],
       "Resource":"*",
       "Condition":{"StringNotEquals":{"aws:RequestedRegion":"${REGION}"}}
     }
@@ -114,6 +128,9 @@ aws iam create-policy --policy-name "$POLICY_NAME" \
 
 echo "Attaching lab policy to user..."
 aws iam attach-user-policy --user-name "$STUDENT_USER" --policy-arn "$POLICY_ARN"
+
+echo "Attaching Glue console access..."
+aws iam attach-user-policy --user-name "$STUDENT_USER" --policy-arn "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess"
 
 # Create StudentLearner role
 echo "Creating StudentLearner role..."

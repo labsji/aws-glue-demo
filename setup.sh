@@ -79,6 +79,7 @@ aws glue create-job --name "video-frame-extractor" \
   --role "$ROLE_ARN" \
   --command "{\"Name\":\"pythonshell\",\"PythonVersion\":\"3.9\",\"ScriptLocation\":\"s3://${INPUT_BUCKET}/scripts/extract_frames.py\"}" \
   --default-arguments "{\"--INPUT_BUCKET\":\"${INPUT_BUCKET}\",\"--INPUT_KEY\":\"videos/sample.mp4\",\"--OUTPUT_BUCKET\":\"${FRAMES_BUCKET}\",\"--extra-py-files\":\"${EXTRA_PY}\"}" \
+  --execution-property MaxConcurrentRuns=5 \
   --glue-version "3.0" --max-capacity 0.0625 --region "$REGION" 2>/dev/null || echo "  Job already exists"
 
 # Lab 2: Annotate frames
@@ -87,6 +88,7 @@ aws glue create-job --name "video-frame-annotator" \
   --role "$ROLE_ARN" \
   --command "{\"Name\":\"pythonshell\",\"PythonVersion\":\"3.9\",\"ScriptLocation\":\"s3://${INPUT_BUCKET}/scripts/annotate_frames.py\"}" \
   --default-arguments "{\"--FRAMES_BUCKET\":\"${FRAMES_BUCKET}\",\"--FRAMES_PREFIX\":\"sample\",\"--OUTPUT_BUCKET\":\"${FRAMES_BUCKET}\",\"--extra-py-files\":\"${EXTRA_PY}\"}" \
+  --execution-property MaxConcurrentRuns=5 \
   --glue-version "3.0" --max-capacity 0.0625 --region "$REGION" 2>/dev/null || echo "  Job already exists"
 
 # Lab 3: Stitch video
@@ -95,16 +97,17 @@ aws glue create-job --name "video-frame-stitcher" \
   --role "$ROLE_ARN" \
   --command "{\"Name\":\"pythonshell\",\"PythonVersion\":\"3.9\",\"ScriptLocation\":\"s3://${INPUT_BUCKET}/scripts/stitch_video.py\"}" \
   --default-arguments "{\"--FRAMES_BUCKET\":\"${FRAMES_BUCKET}\",\"--FRAMES_PREFIX\":\"sample-annotated\",\"--OUTPUT_BUCKET\":\"${OUTPUT_BUCKET}\",\"--OUTPUT_KEY\":\"sample-annotated.mp4\",\"--FPS\":\"1\",\"--extra-py-files\":\"${EXTRA_PY}\"}" \
+  --execution-property MaxConcurrentRuns=5 \
   --glue-version "3.0" --max-capacity 0.0625 --region "$REGION" 2>/dev/null || echo "  Job already exists"
 
 echo ""
 echo "=== Setup Complete ==="
 echo ""
-echo "Three Glue jobs created. Follow the tutorial in TUTORIAL.md"
+echo "Run the labs using the helper script:"
+echo "  ./run.sh extract sample     # Lab 1: video → frames"
+echo "  ./run.sh annotate sample    # Lab 2: detect & annotate"
+echo "  ./run.sh stitch sample      # Lab 3: frames → video"
+echo "  ./run.sh all sample         # Run all 3 in sequence"
+echo "  ./run.sh status             # Check job status"
 echo ""
-echo "Quick test — run all 3 labs in sequence:"
-echo "  aws glue start-job-run --job-name video-frame-extractor --region $REGION"
-echo "  # wait for completion, then:"
-echo "  aws glue start-job-run --job-name video-frame-annotator --region $REGION"
-echo "  # wait for completion, then:"
-echo "  aws glue start-job-run --job-name video-frame-stitcher --region $REGION"
+echo "Available videos: sample, soccer, tennis, basketball, cricket"

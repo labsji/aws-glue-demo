@@ -30,28 +30,14 @@ AWS_REGION=us-east-1 ./setup.sh
 ## Run the Job
 
 ```bash
-aws glue start-job-run --job-name video-frame-extractor --region ap-south-1
+./run.sh extract sample     # Lab 1: video → frames
+./run.sh annotate sample    # Lab 2: detect & annotate
+./run.sh stitch sample      # Lab 3: frames → video
+./run.sh all sample         # Run all 3 in sequence
+./run.sh status             # Check job status
 ```
 
-Check status:
-
-```bash
-aws glue get-job-runs --job-name video-frame-extractor --region ap-south-1 --query 'JobRuns[0].JobRunState'
-```
-
-View output:
-
-```bash
-aws s3 ls s3://glue-video-frames-<ACCOUNT_ID>/sample/
-```
-
-## Use Your Own Video
-
-```bash
-aws s3 cp my-video.mp4 s3://glue-video-input-<ACCOUNT_ID>/videos/my-video.mp4 --region ap-south-1
-aws glue start-job-run --job-name video-frame-extractor \
-  --arguments '{"--INPUT_KEY":"videos/my-video.mp4"}' --region ap-south-1
-```
+Available videos: `sample`, `soccer`, `tennis`, `basketball`, `cricket`
 
 ## Hands-On Tutorial
 
@@ -74,6 +60,7 @@ chmod +x cleanup.sh
 
 | File | Description |
 |------|-------------|
+| `run.sh` | Helper script to run labs easily |
 | `setup.sh` | One-click setup: creates buckets, IAM role, uploads deps, creates Glue jobs |
 | `cleanup.sh` | Tears down all created AWS resources |
 | `extract_frames.py` | Lab 1 — extracts video frames using OpenCV |
