@@ -3,9 +3,9 @@ set -e
 
 REGION="${AWS_REGION:-ap-south-1}"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-INPUT_BUCKET="glue-video-input-${ACCOUNT_ID}"
-FRAMES_BUCKET="glue-video-frames-${ACCOUNT_ID}"
-OUTPUT_BUCKET="glue-video-output-${ACCOUNT_ID}"
+INPUT_BUCKET="glue-video-input-${ACCOUNT_ID}-${REGION}"
+FRAMES_BUCKET="glue-video-frames-${ACCOUNT_ID}-${REGION}"
+OUTPUT_BUCKET="glue-video-output-${ACCOUNT_ID}-${REGION}"
 ROLE_NAME="GlueVideoFrameExtractorRole"
 
 echo "=== AWS Glue Video Processing Lab Setup ==="
@@ -16,9 +16,13 @@ echo ""
 # Create S3 buckets
 echo "Creating S3 buckets..."
 for BUCKET in "$INPUT_BUCKET" "$FRAMES_BUCKET" "$OUTPUT_BUCKET"; do
-  aws s3api create-bucket --bucket "$BUCKET" \
-    --create-bucket-configuration LocationConstraint="$REGION" --region "$REGION" 2>/dev/null \
-    && echo "  Created $BUCKET" || echo "  $BUCKET already exists"
+  if aws s3api head-bucket --bucket "$BUCKET" --region "$REGION" 2>/dev/null; then
+    echo "  $BUCKET already exists"
+  else
+    aws s3api create-bucket --bucket "$BUCKET" \
+      --create-bucket-configuration LocationConstraint="$REGION" --region "$REGION"
+    echo "  Created $BUCKET"
+  fi
 done
 
 # Create IAM role

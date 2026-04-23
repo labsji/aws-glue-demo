@@ -3,9 +3,9 @@ set -e
 
 REGION="${AWS_REGION:-ap-south-1}"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-INPUT_BUCKET="glue-video-input-${ACCOUNT_ID}"
-FRAMES_BUCKET="glue-video-frames-${ACCOUNT_ID}"
-OUTPUT_BUCKET="glue-video-output-${ACCOUNT_ID}"
+INPUT_BUCKET="glue-video-input-${ACCOUNT_ID}-${REGION}"
+FRAMES_BUCKET="glue-video-frames-${ACCOUNT_ID}-${REGION}"
+OUTPUT_BUCKET="glue-video-output-${ACCOUNT_ID}-${REGION}"
 ROLE_NAME="GlueVideoFrameExtractorRole"
 
 echo "=== Cleaning up AWS Glue Video Processing Labs ==="
