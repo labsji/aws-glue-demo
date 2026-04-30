@@ -40,6 +40,6 @@ for key in keys[1:]:
 writer.release()
 
 # Upload video
-s3.upload_file(tmp_path, args['OUTPUT_BUCKET'], args['OUTPUT_KEY'])
+s3.upload_file(tmp_path, args['OUTPUT_BUCKET'], args['OUTPUT_KEY'], ExtraArgs={'ContentType': 'video/mp4'})
 os.unlink(tmp_path)
 print(f"Stitched video → s3://{args['OUTPUT_BUCKET']}/{args['OUTPUT_KEY']}")

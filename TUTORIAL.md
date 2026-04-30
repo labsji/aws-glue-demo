@@ -272,3 +272,73 @@ echo "Output: ./output.mp4"
 ```
 
 This removes all 3 Glue jobs, 3 S3 buckets, and the IAM role.
+
+---
+
+## Build It Yourself with Kiro (Advanced)
+
+**Goal:** Recreate this entire pipeline from scratch using only Kiro as your guide — no cloning, no copying. Your end state should match this repo.
+
+This is the real test of understanding. Instead of running pre-written scripts, you'll describe what you want to Kiro in plain English and let it write, deploy, and run everything for you.
+
+### Setup
+
+In CloudShell, start fresh:
+
+```bash
+mkdir my-glue-demo && cd my-glue-demo
+kiro-cli chat
+```
+
+### Step 1 — Bootstrap infrastructure
+
+Tell Kiro:
+> *"Create 3 S3 buckets for a video processing pipeline: one for input videos, one for frames, one for output. Use my account ID and region ap-south-1 in the bucket names."*
+
+Then:
+> *"Create an IAM role called GlueVideoFrameExtractorRole that Glue can assume, with least-privilege access to those 3 buckets and CloudWatch Logs."*
+
+### Step 2 — Lab 1: Frame extractor
+
+Tell Kiro:
+> *"Write a Glue Python shell script that downloads a video from S3, extracts 1 frame per second using OpenCV, and uploads each frame as a JPG to the frames bucket. Then create the Glue job and run it on sample.mp4."*
+
+Verify:
+> *"List the frames in S3 and show me a pre-signed URL for one."*
+
+### Step 3 — Lab 2: Frame annotator
+
+Tell Kiro:
+> *"Write a Glue Python shell script that reads each JPG frame from S3, detects ball-like objects using HSV color filtering and contour detection, draws green bounding boxes, and saves annotated frames to a separate prefix. Create and run the Glue job."*
+
+Verify:
+> *"Show me a pre-signed URL for an annotated frame."*
+
+### Step 4 — Lab 3: Video stitcher
+
+Tell Kiro:
+> *"Write a Glue Python shell script that reads all annotated frames from S3 in order, stitches them into an MP4 using OpenCV VideoWriter, and uploads the result to the output bucket with Content-Type video/mp4. Create and run the Glue job."*
+
+Verify:
+> *"Give me a pre-signed URL for the output video."*
+
+### Convergence Check
+
+Once your pipeline produces a working annotated video, compare your scripts against the reference repo:
+
+```bash
+cd ~
+git clone https://github.com/labsji/aws-glue-demo.git reference
+diff ~/my-glue-demo/extract_frames.py ~/reference/extract_frames.py
+diff ~/my-glue-demo/annotate_frames.py ~/reference/annotate_frames.py
+diff ~/my-glue-demo/stitch_video.py ~/reference/stitch_video.py
+```
+
+Differences are fine — what matters is that your pipeline produces a playable annotated video. That's the UAT. If it works, your implementation is equivalent.
+
+### What you'll learn from this exercise
+
+- How to direct an AI assistant to build real infrastructure from a description
+- What `setup.sh` was actually doing behind the scenes
+- Where things break when you build from scratch (permissions, bucket names, codec issues)
+- How to use Kiro as a development partner, not just a search engine

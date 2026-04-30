@@ -195,17 +195,40 @@ kiro-cli chat --resume
 Today's lab ran on a pre-configured account. But everything you did here — the S3 buckets, the Glue jobs, the IAM role — can be recreated in minutes on your own AWS Free Tier account.
 
 **Your learning objective for after this lab:**
-> Set up and run this same pipeline from scratch in your own AWS account. No pre-configuration. No instructor account. Just you, the AWS console, and the `setup.sh` script.
+> Recreate this pipeline from scratch in your own AWS account using Kiro as your guide. No pre-configuration. No copying code. You describe what you want, Kiro builds it, and your end state should match this repo.
 
-Here's how:
+This is how you'll know you understood the lab — not by running pre-written scripts, but by being able to direct an AI assistant to rebuild it from a blank slate.
+
+👉 Follow the step-by-step prompt sequence in **[TUTORIAL.md — Build It Yourself with Kiro](TUTORIAL.md#build-it-yourself-with-kiro-advanced)**.
+
+### Switching between accounts is normal — and a good strategy
+
+Most students go back and forth a few times between their own account and the pre-configured lab account. That's not a sign of struggle — it's smart learning. When something doesn't work on your account, you come back here to see the working version, understand what's different, then go try again.
+
+The pre-configured account stays available for exactly this reason. Use it freely as a reference:
+
+- Stuck on IAM permissions? Come back and inspect the working role here
+- Not sure what the Glue job arguments should look like? Check the working job in the console
+- Output not matching? Compare your S3 output with the reference output here
+
+To switch back to the lab account at any time, open a new CloudShell tab at:
+👉 [https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)
+
+Your session and files are preserved. Just `cd aws-glue-demo` and pick up where you left off.
+
+### Getting started on your own account
 
 1. Create a free AWS account at [https://aws.amazon.com/free](https://aws.amazon.com/free)
 2. Open CloudShell in your account
-3. Clone the repo and run `./setup.sh` — it creates everything from scratch
-4. Run the labs with `./run.sh`
+3. Install Kiro and start a session:
+   ```bash
+   mkdir my-glue-demo && cd my-glue-demo
+   kiro-cli chat
+   ```
+4. Follow the prompts in TUTORIAL.md — Kiro will write, deploy, and run everything
 5. When done, run `./cleanup.sh` to tear everything down and avoid charges
 
-This is the real test of understanding. When *you* set it up, you'll see exactly what the pre-configuration was hiding — and you'll learn from it. The Free Tier covers the compute and storage used in this lab comfortably for a few runs.
+When *you* set it up from scratch, you'll see exactly what the pre-configuration was hiding — and that's where the real learning happens. The Free Tier covers the compute and storage used in this lab comfortably for a few runs.
 
 ---
 
