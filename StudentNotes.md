@@ -66,16 +66,14 @@ CloudShell will open in Mumbai (ap-south-1). You may see **"Waiting for terminal
 
 ## Step 2: Start the Lab with Kiro
 
-In CloudShell, run this single command:
+In CloudShell, run:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/labsji/aws-glue-demo/main/start.sh)
+cd aws-glue-demo
+./start.sh
 ```
 
-This will:
-1. Clone the repo into `~/aws-glue-demo`
-2. Seed a Kiro conversation with full lab context
-3. Launch `kiro-cli chat --resume` — dropping you straight into a guided session
+This loads the lab context and launches Kiro — dropping you straight into a guided session.
 
 **Kiro already knows the lab.** You can immediately say things like:
 - *"run Lab 1"*
