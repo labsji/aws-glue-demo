@@ -16,24 +16,21 @@ All three jobs are **AWS Glue Python shell jobs** — serverless, no cluster, bi
 
 ---
 
-## Step 1: Sign In
+## Step 1: Open CloudShell (Mumbai)
 
-👉 **[Sign in to AWS Console](https://signin.aws.amazon.com/console?account=labsji)** — account alias `labsji` is pre-filled
+👉 **[https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
 
-- Username / Password: shared separately by your instructor
-- After sign-in, change your password when prompted
+This link opens the AWS sign-in page. Enter:
 
----
+- **Account alias:** `labsji`
+- **Username / Password:** shared separately by your instructor
+- Change your password when prompted, then CloudShell opens automatically in Mumbai (ap-south-1)
 
-## Step 2: Open CloudShell
-
-👉 **[Open CloudShell in Mumbai (ap-south-1)](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
-
-CloudShell gives you a terminal with AWS credentials already configured — no setup needed.
+> Use only Mumbai for this lab — other regions are not permitted for this account.
 
 ---
 
-## Step 3: Start the Lab with Kiro
+## Step 2: Start the Lab with Kiro
 
 In CloudShell, run this single command:
 
