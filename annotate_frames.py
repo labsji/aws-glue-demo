@@ -35,11 +35,16 @@ for key in keys:
     mask2 = cv2.inRange(hsv, lower2, upper2)
     mask = cv2.bitwise_or(mask, mask2)
 
+    # Morphological cleanup: remove noise, then restore ball shapes
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    mask = cv2.erode(mask, kernel, iterations=1)
+    mask = cv2.dilate(mask, kernel, iterations=2)
+
     # Find contours
     mask = cv2.GaussianBlur(mask, (5, 5), 0)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Filter by size and circularity — draw bounding boxes
+    # Filter by size and circularity — tighter threshold (0.6) reduces false positives
     detected = 0
     for cnt in contours:
         area = cv2.contourArea(cnt)
@@ -47,7 +52,7 @@ for key in keys:
             perimeter = cv2.arcLength(cnt, True)
             if perimeter > 0:
                 circularity = 4 * 3.14159 * area / (perimeter * perimeter)
-                if circularity > 0.3:
+                if circularity > 0.6:
                     x, y, w, h = cv2.boundingRect(cnt)
                     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
                     cv2.putText(img, "ball", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
