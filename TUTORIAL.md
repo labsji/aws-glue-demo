@@ -64,6 +64,16 @@ aws s3 ls s3://glue-video-frames-${ACCOUNT_ID}/sample/
 
 You should see `frame_00000.jpg`, `frame_00001.jpg`, etc.
 
+### Preview
+
+Generate a pre-signed URL for any frame and open it in your browser:
+
+```bash
+aws s3 presign s3://glue-video-frames-${ACCOUNT_ID}/sample/frame_00005.jpg --expires-in 300
+```
+
+Copy the URL into your browser — the JPG renders directly. Try a few different frame numbers to see the extracted images.
+
 ### Key Code (`extract_frames.py`)
 
 ```python
@@ -107,6 +117,17 @@ aws glue start-job-run --job-name video-frame-annotator --region $REGION
 ```bash
 aws s3 ls s3://glue-video-frames-${ACCOUNT_ID}/sample-annotated/
 ```
+
+### Preview
+
+Compare an original frame with its annotated version:
+
+```bash
+aws s3 presign s3://glue-video-frames-${ACCOUNT_ID}/sample/frame_00005.jpg --expires-in 300
+aws s3 presign s3://glue-video-frames-${ACCOUNT_ID}/sample-annotated/frame_00005.jpg --expires-in 300
+```
+
+Open both URLs side by side to see the bounding boxes your detection code drew.
 
 ### Key Code (`annotate_frames.py`)
 
@@ -169,6 +190,14 @@ aws s3 ls s3://glue-video-output-${ACCOUNT_ID}/
 ```bash
 aws s3 cp s3://glue-video-output-${ACCOUNT_ID}/sample-annotated.mp4 ./output.mp4 --region $REGION
 ```
+
+Or preview directly in your browser without downloading — generate a pre-signed URL:
+
+```bash
+aws s3 presign s3://glue-video-output-${ACCOUNT_ID}/sample-annotated.mp4 --expires-in 300
+```
+
+Open the URL in your browser. Most browsers will play the MP4 inline.
 
 ### Key Code (`stitch_video.py`)
 
