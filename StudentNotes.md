@@ -1,58 +1,90 @@
 # Student Notes — AWS Glue Video Processing Lab
 
-## Step 1: Sign In to AWS Console
+## What You're Building
 
-👉 **[https://labsji.signin.aws.amazon.com/console](https://labsji.signin.aws.amazon.com/console)**
+A serverless video processing pipeline on AWS:
 
-- **Account alias:** `labsji`
-- **Username / Password:** shared separately
+```
+MP4 in S3  →  Lab 1: Extract frames  →  Lab 2: Detect & annotate  →  Lab 3: Stitch back to MP4
+```
 
-After sign-in, go directly to CloudShell (Mumbai):
+- **Lab 1** — AWS Glue downloads your video and saves one JPG per second to S3
+- **Lab 2** — Glue reads each frame, runs a ball-detection algorithm, draws bounding boxes, saves annotated frames
+- **Lab 3** — Glue stitches the annotated frames back into an MP4
 
-👉 **[https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1#](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1#)**
-
----
-
-## Step 2: Two CloudShell Sessions
-
-Open **two CloudShell tabs** in Mumbai. The repo is already cloned in your home directory.
-
-| Session | Purpose |
-|---------|---------|
-| **Session 1 — CLI** | Run the tutorial labs |
-| **Session 2 — Kiro** | AI-assisted code exploration and modification |
+All three jobs are **AWS Glue Python shell jobs** — serverless, no cluster, billed per second. The interesting part is Lab 2: the detection code is intentionally basic, and your job is to improve it.
 
 ---
 
-## Step 3: Run the Tutorial (Session 1)
+## Step 1: Sign In
 
-Press **↑** to recall the last command, or type:
+👉 **[Sign in to AWS Console](https://signin.aws.amazon.com/console?account=labsji)** — account alias `labsji` is pre-filled
+
+- Username / Password: shared separately by your instructor
+- After sign-in, change your password when prompted
+
+---
+
+## Step 2: Open CloudShell
+
+👉 **[Open CloudShell in Mumbai (ap-south-1)](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
+
+CloudShell gives you a terminal with AWS credentials already configured — no setup needed.
+
+---
+
+## Step 3: Start the Lab with Kiro
+
+In CloudShell, run this single command:
 
 ```bash
-cd aws-glue-demo
-./run.sh extract sample    # Lab 1: video → frames
-./run.sh annotate sample   # Lab 2: detect & annotate
-./run.sh stitch sample     # Lab 3: frames → video
-./run.sh status            # Check job status
+bash <(curl -s https://raw.githubusercontent.com/labsji/aws-glue-demo/main/start.sh)
+```
+
+This will:
+1. Clone the repo into `~/aws-glue-demo`
+2. Seed a Kiro conversation with full lab context
+3. Launch `kiro-cli chat --resume` — dropping you straight into a guided session
+
+**Kiro already knows the lab.** You can immediately say things like:
+- *"run Lab 1"*
+- *"explain the detection code"*
+- *"improve the ball detection with a circularity filter"*
+- *"run the full pipeline on batminton.mp4"*
+
+---
+
+## What Kiro Can Do For You
+
+| Ask Kiro | What happens |
+|----------|-------------|
+| *"run Lab 1"* | Runs `./run.sh extract sample`, polls until done |
+| *"explain annotate_frames.py"* | Walks through the HSV detection logic |
+| *"add a red HSV range for cricket balls"* | Edits the file, re-uploads, re-runs Lab 2 |
+| *"run the full pipeline"* | Runs all 3 labs in sequence |
+| *"show me the output frames"* | Lists S3 keys in the frames bucket |
+
+---
+
+## If You Need to Restart Kiro
+
+```bash
+cd ~/aws-glue-demo
+kiro-cli chat --resume
+```
+
+`--resume` picks up exactly where you left off — your conversation history is preserved.
+
+---
+
+## Cleanup
+
+When you're done, tell Kiro *"clean up all resources"* or run:
+
+```bash
+cd ~/aws-glue-demo && ./cleanup.sh
 ```
 
 ---
 
-## Step 4: Switch to Kiro (Session 2)
-
-Press **↑** to recall, or type:
-
-```bash
-cd aws-glue-demo
-kiro-cli chat
-```
-
-From here, **Kiro takes over the tutorial**. Example prompts:
-
-- *"Explain what annotate_frames.py does"*
-- *"Implement Option B from the spec — add a red HSV range"*
-- *"Run Lab 2 after my changes"*
-
----
-
-> **Note:** Login credentials are shared via a separate channel.
+> Credentials are shared by your instructor. Do not share them or use them outside this lab.
