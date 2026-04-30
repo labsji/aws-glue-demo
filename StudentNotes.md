@@ -40,10 +40,10 @@ This lab gives you hands-on experience with all three. By the end, you'll have r
 A video processing pipeline, entirely in the cloud:
 
 ```
-MP4 in S3  →  Lab 1: Extract frames  →  Lab 2: Detect & annotate  →  Lab 3: Stitch back to MP4
+MP4 Video in S3  →  Lab 1: Extract frames from the Video as Images  →  Lab 2: Detect & annotate features in the frames  →  Lab 3: Stitch frames back in to MP4 Video
 ```
 
-- **Lab 1** — A Glue job downloads your video from S3 and saves one JPG frame per second back to S3
+- **Lab 1** — A AWS Glue job downloads your video from S3 and saves one JPG image frame per second of video back into to S3
 - **Lab 2** — Another Glue job reads each frame, runs a ball-detection algorithm, draws bounding boxes, saves annotated frames
 - **Lab 3** — A third Glue job stitches the annotated frames back into an MP4
 
