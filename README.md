@@ -67,6 +67,10 @@ chmod +x cleanup.sh
 | `annotate_frames.py` | Lab 2 — detects balls and draws bounding boxes |
 | `stitch_video.py` | Lab 3 — stitches annotated frames back into video |
 | `TUTORIAL.md` | Step-by-step hands-on tutorial |
+| `StudentNotes.md` | Student-facing guide with cloud orientation and lab walkthrough |
+| `start.sh` | Launches Kiro with pre-seeded lab context |
+| `seed-kiro-session.py` | Seeds kiro-cli session with lab conversation history |
+| `create-student.sh` | Creates a region-locked student IAM account |
 | `sample-video/sample.mp4` | Default test video |
 | `sample-video/batminton.mp4` | Badminton clip — shuttle detection |
 | `sample-video/cloud.mp4` | Cloud footage |
