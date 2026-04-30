@@ -31,6 +31,7 @@ You will have **two CloudShell tabs** open in the Mumbai region.
 Follow **[TUTORIAL.md](TUTORIAL.md)** to run the three labs:
 
 ```bash
+git clone https://github.com/labsji/aws-glue-demo.git
 cd aws-glue-demo
 ./run.sh extract sample    # Lab 1: video → frames
 ./run.sh annotate sample   # Lab 2: detect & annotate
