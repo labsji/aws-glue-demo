@@ -107,6 +107,13 @@ aws glue create-job --name "video-frame-stitcher" \
 echo ""
 echo "=== Setup Complete ==="
 echo ""
+
+# Seed bash history for friction-free recall with ↑ arrow
+HISTORY_FILE="${HOME}/.bash_history"
+for cmd in "kiro-cli chat" "cd aws-glue-demo"; do
+  grep -qxF "$cmd" "$HISTORY_FILE" 2>/dev/null || echo "$cmd" >> "$HISTORY_FILE"
+done
+
 echo "Run the labs using the helper script:"
 echo "  ./run.sh extract sample     # Lab 1: video → frames"
 echo "  ./run.sh annotate sample    # Lab 2: detect & annotate"
