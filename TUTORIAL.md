@@ -81,12 +81,12 @@ while cap.isOpened():
 ### Try with other videos
 
 ```bash
-aws s3 cp sample-video/soccer.mp4 s3://glue-video-input-${ACCOUNT_ID}/videos/soccer.mp4 --region $REGION
+aws s3 cp sample-video/batminton.mp4 s3://glue-video-input-${ACCOUNT_ID}/videos/batminton.mp4 --region $REGION
 aws glue start-job-run --job-name video-frame-extractor \
-  --arguments '{"--INPUT_KEY":"videos/soccer.mp4"}' --region $REGION
+  --arguments '{"--INPUT_KEY":"videos/batminton.mp4"}' --region $REGION
 ```
 
-Available: `soccer.mp4`, `tennis.mp4`, `basketball.mp4`, `cricket.mp4`
+Available: `batminton.mp4`, `cloud.mp4`, `dna.mp4`, `flyover.mp4`, `tunneltraffic.mp4`
 
 ---
 
@@ -189,17 +189,17 @@ s3.upload_file(tmp_path, output_bucket, output_key)
 The stitcher job is provided as a reference. Try:
 
 1. **Change the FPS** — override `--FPS` to speed up or slow down the output
-2. **Process a different video** — run the full pipeline on `soccer.mp4` or `tennis.mp4`:
+2. **Process a different video** — run the full pipeline on `batminton.mp4` or `flyover.mp4`:
    ```bash
    # Extract
    aws glue start-job-run --job-name video-frame-extractor \
-     --arguments '{"--INPUT_KEY":"videos/soccer.mp4"}' --region $REGION
+     --arguments '{"--INPUT_KEY":"videos/batminton.mp4"}' --region $REGION
    # Annotate
    aws glue start-job-run --job-name video-frame-annotator \
-     --arguments '{"--FRAMES_PREFIX":"soccer"}' --region $REGION
+     --arguments '{"--FRAMES_PREFIX":"batminton"}' --region $REGION
    # Stitch
    aws glue start-job-run --job-name video-frame-stitcher \
-     --arguments '{"--FRAMES_PREFIX":"soccer-annotated","--OUTPUT_KEY":"soccer-annotated.mp4"}' --region $REGION
+     --arguments '{"--FRAMES_PREFIX":"batminton-annotated","--OUTPUT_KEY":"batminton-annotated.mp4"}' --region $REGION
    ```
 3. **Add a watermark** — overlay text or a logo on each frame before stitching
 
