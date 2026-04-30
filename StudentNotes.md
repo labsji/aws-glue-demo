@@ -110,14 +110,4 @@ kiro-cli chat --resume
 
 ---
 
-## Cleanup
-
-When you're done, tell Kiro *"clean up all resources"* or run:
-
-```bash
-cd ~/aws-glue-demo && ./cleanup.sh
-```
-
----
-
 > Credentials are shared by your instructor. Do not share them or use them outside this lab.
