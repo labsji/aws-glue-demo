@@ -93,6 +93,28 @@ The interesting part is **Lab 2**: the detection code is intentionally basic, an
 
 ---
 
+## What You'll Take Away From This Lab
+
+This isn't just a video processing exercise. Here's what you're actually building familiarity with:
+
+**1. AWS CloudShell — your browser-based terminal**
+No installs, no credentials to configure. You'll see firsthand how CloudShell gives you a fully functional Linux shell with AWS access in seconds. That's a superpower for anyone working in the cloud.
+
+**2. Kiro — an AI coding assistant that works alongside you**
+Kiro isn't just a chatbot. It reads your code, runs commands, edits files, and explains what's happening — all in conversation. This tutorial itself was built with Kiro's assistance. By the end of today, you'll have a feel for how to use it as a real development partner.
+
+**3. AWS Glue — serverless compute for data work**
+You'll run three real Glue jobs that process video files stored in S3. No servers to manage. You'll see how Glue fits into a data pipeline and why it's a practical choice for batch processing tasks.
+
+**4. A task to take home — add audio to video using Glue**
+Once you've completed the three labs, here's your challenge:
+
+> Create a new folder in this repo. Write an AWS Glue job that takes a video file (e.g. `batminton.mp4`) and its matching audio file (`batminton.mp3`) from S3, merges them, and uploads the result.
+
+This is open-ended by design. Use Kiro to help you figure it out — ask it to scaffold the code, explain `ffmpeg` or `moviepy` options, write the Glue job, and deploy it. The goal is to experience what it feels like to build something real with an AI assistant from scratch.
+
+---
+
 ## Step 1: Open CloudShell (Mumbai)
 
 👉 **[https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
