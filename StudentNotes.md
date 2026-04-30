@@ -113,6 +113,7 @@ Once you've completed the three labs, here's your challenge:
 
 This is open-ended by design. Use Kiro to help you figure it out — ask it to scaffold the code, explain `ffmpeg` or `moviepy` options, write the Glue job, and deploy it. The goal is to experience what it feels like to build something real with an AI assistant from scratch.
 
+Without further ado lets get hands on...
 ---
 
 ## Step 1: Open CloudShell (Mumbai)
