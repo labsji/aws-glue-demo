@@ -4,7 +4,7 @@
 
 You're here because you want to build AI agents and intelligent applications. That's a great goal. But before an AI agent can do anything useful, it needs to *run* somewhere — and understanding how code runs in the cloud is the foundation everything else sits on.
 
-This lab is your first encounter with that foundation.
+This lab is your first encounter with that foundation. And here's the thing — **your first brush with the cloud is going to be smooth**. Not because the cloud is simple, but because a lot has been set up for you already, and you have an AI pair right beside you.
 
 ---
 
@@ -35,6 +35,44 @@ This lab gives you hands-on experience with all three. By the end, you'll have r
 
 ---
 
+## Your Secret Weapons: CloudShell + Kiro
+
+Two things make this lab unusually approachable for a first cloud experience.
+
+**AWS CloudShell** is a terminal that runs *inside your browser*, directly in the AWS console. There's nothing to install, no SSH keys to configure, no local environment to set up. You open a URL, and you have a fully functional Linux shell with AWS credentials already loaded. It's AWS's way of saying: just start typing.
+
+**Kiro** is your AI coding assistant, running right inside that shell. It knows this lab, knows the codebase, and can read files, run commands, and explain what's happening — all in plain conversation. Instead of hunting through documentation or guessing at commands, you just ask.
+
+Together, they collapse what would normally be a multi-hour environment setup into a single URL and one command. **The terminal is your cloud. The conversation is your interface.**
+
+Here's what that looks like in practice:
+
+| Without CloudShell + Kiro | With CloudShell + Kiro |
+|---------------------------|------------------------|
+| Install AWS CLI locally | Already available in CloudShell |
+| Configure credentials | Pre-loaded in the session |
+| Read docs to find the right command | Ask Kiro |
+| Debug a failing Glue job alone | Kiro reads the logs and explains |
+| Edit code, re-upload manually | Kiro edits, uploads, and re-runs |
+
+---
+
+## This Account Is Pre-Set Up — Here's What That Means
+
+When you start this lab, a lot of the hard work is already done:
+
+- **S3 buckets** are created and named correctly
+- **IAM role** with the right permissions is in place
+- **Glue jobs** are registered and ready to run
+- **Sample videos** are uploaded and waiting
+- **Python dependencies** (OpenCV, etc.) are packaged and available to Glue
+
+In a real project, setting all of this up correctly is where most beginners get stuck — permissions errors, missing buckets, wrong regions. You're skipping that friction today so you can focus on what matters: **understanding the flow, running the pipeline, and writing real code**.
+
+This is intentional. Your first brush with the cloud should feel like a success, not a debugging marathon.
+
+---
+
 ## What You're Building
 
 A video processing pipeline, entirely in the cloud:
@@ -47,11 +85,31 @@ A video processing pipeline, entirely in the cloud:
 └─────────────────┘    └──────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-- **Lab 1** — A AWS Glue job downloads your video from S3 and saves one JPG image frame per second of video back into to S3
+- **Lab 1** — A Glue job downloads your video from S3 and saves one JPG frame per second back into S3
 - **Lab 2** — Another Glue job reads each frame, runs a ball-detection algorithm, draws bounding boxes, saves annotated frames
 - **Lab 3** — A third Glue job stitches the annotated frames back into an MP4
 
 The interesting part is **Lab 2**: the detection code is intentionally basic, and your job is to improve it. This is where you'll write and deploy real code to a cloud job.
+
+---
+
+## 👀 Explore the Console — Before and After
+
+Don't just run commands blindly. The AWS console is your window into what's actually happening. Make it a habit to look.
+
+**Before running any lab**, open these in your browser:
+
+- **S3 Console** → [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
+  Browse the input bucket. Find your video file. Notice the folder structure.
+
+- **AWS Glue Console** → [https://ap-south-1.console.aws.amazon.com/glue/home?region=ap-south-1#/v2/jobs](https://ap-south-1.console.aws.amazon.com/glue/home?region=ap-south-1#/v2/jobs)
+  See the three jobs listed: `video-frame-extractor`, `video-frame-annotator`, `video-frame-stitcher`. Click one and look at its script and configuration.
+
+**After running a lab**, go back to S3 and look at the output bucket. You'll see the frames appear — actual JPG files created by code you triggered. That's your pipeline working.
+
+Visualising the before/after in the console turns abstract commands into something concrete. You'll understand *why* the pipeline is structured the way it is.
+
+---
 
 ## Step 1: Open CloudShell (Mumbai)
 
@@ -110,4 +168,23 @@ kiro-cli chat --resume
 
 ---
 
-> Credentials are shared by your instructor. Do not share them or use them outside this lab.
+## Try This on Your Own AWS Account
+
+Today's lab ran on a pre-configured account. But everything you did here — the S3 buckets, the Glue jobs, the IAM role — can be recreated in minutes on your own AWS Free Tier account.
+
+**Your learning objective for after this lab:**
+> Set up and run this same pipeline from scratch in your own AWS account. No pre-configuration. No instructor account. Just you, the AWS console, and the `setup.sh` script.
+
+Here's how:
+
+1. Create a free AWS account at [https://aws.amazon.com/free](https://aws.amazon.com/free)
+2. Open CloudShell in your account
+3. Clone the repo and run `./setup.sh` — it creates everything from scratch
+4. Run the labs with `./run.sh`
+5. When done, run `./cleanup.sh` to tear everything down and avoid charges
+
+This is the real test of understanding. When *you* set it up, you'll see exactly what the pre-configuration was hiding — and you'll learn from it. The Free Tier covers the compute and storage used in this lab comfortably for a few runs.
+
+---
+
+> Credentials for today's lab are shared by your instructor. Do not share them or use them outside this session.
