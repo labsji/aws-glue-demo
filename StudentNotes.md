@@ -24,7 +24,8 @@ This link opens the AWS sign-in page. Enter:
 
 - **Account alias:** `labsji`
 - **Username / Password:** shared separately by your instructor
-- Change your password when prompted, then CloudShell opens automatically in Mumbai (ap-south-1)
+
+CloudShell will open in Mumbai (ap-south-1). You may see **"Waiting for terminal session..."** messages for 30–60 seconds — this is normal, just wait.
 
 > Use only Mumbai for this lab — other regions are not permitted for this account.
 
