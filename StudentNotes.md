@@ -93,6 +93,21 @@ The interesting part is **Lab 2**: the detection code is intentionally basic, an
 
 ---
 
+## Step 1: Open CloudShell (Mumbai)
+
+👉 **[https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
+
+This link opens the AWS sign-in page. Enter:
+
+- **Account alias:** `labsji`
+- **Username / Password:** shared separately by your instructor
+
+CloudShell will open in Mumbai (ap-south-1). You may see **"Waiting for terminal session..."** messages for 30–60 seconds — this is normal, just wait.
+
+> Use only Mumbai for this lab — other regions are not permitted for this account.
+
+---
+
 ## 👀 Explore the Console — Before and After
 
 Don't just run commands blindly. The AWS console is your window into what's actually happening. Make it a habit to look.
@@ -108,21 +123,6 @@ Don't just run commands blindly. The AWS console is your window into what's actu
 **After running a lab**, go back to S3 and look at the output bucket. You'll see the frames appear — actual JPG files created by code you triggered. That's your pipeline working.
 
 Visualising the before/after in the console turns abstract commands into something concrete. You'll understand *why* the pipeline is structured the way it is.
-
----
-
-## Step 1: Open CloudShell (Mumbai)
-
-👉 **[https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1](https://ap-south-1.console.aws.amazon.com/cloudshell/home?region=ap-south-1)**
-
-This link opens the AWS sign-in page. Enter:
-
-- **Account alias:** `labsji`
-- **Username / Password:** shared separately by your instructor
-
-CloudShell will open in Mumbai (ap-south-1). You may see **"Waiting for terminal session..."** messages for 30–60 seconds — this is normal, just wait.
-
-> Use only Mumbai for this lab — other regions are not permitted for this account.
 
 ---
 
